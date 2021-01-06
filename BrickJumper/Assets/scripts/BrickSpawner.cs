@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BrickSpawner : MonoBehaviour {
 
+	//initializing variables
 	[System.Serializable]
 	public struct SpawnHeight {
 		public float min;
@@ -24,6 +25,7 @@ public class BrickSpawner : MonoBehaviour {
 	float targetAspect;
 	Vector3 dynamicSpawnPos;
 
+	//starting the game
 	void Start() {
 		pipes = new List<Transform>();
 		game = GameController.Instance;
@@ -31,6 +33,7 @@ public class BrickSpawner : MonoBehaviour {
 			SpawnPipe();
 	}
 
+	//toggle whether the game is on or off
 	void OnEnable() {
 		GameController.OnGameOverConfirmed += OnGameOverConfirmed;
 	}
@@ -39,6 +42,7 @@ public class BrickSpawner : MonoBehaviour {
 		GameController.OnGameOverConfirmed -= OnGameOverConfirmed;
 	}
 
+	//method to confirm the game is over
 	void OnGameOverConfirmed() {
 		for (int i = pipes.Count - 1; i >= 0; i--) {
 			GameObject temp = pipes[i].gameObject;
@@ -49,6 +53,7 @@ public class BrickSpawner : MonoBehaviour {
 			SpawnPipe();
 	}
 
+	//method to help constently update the game while playing
 	void Update() {
 		if (game.GameOver) return;
 
@@ -64,6 +69,7 @@ public class BrickSpawner : MonoBehaviour {
 		ShiftPipes();
 	}
 
+	//method to spawn the pipes
 	void SpawnPipe() {
 		GameObject pipe = Instantiate(PipePrefab) as GameObject;
 		pipe.transform.SetParent(transform);
@@ -76,6 +82,7 @@ public class BrickSpawner : MonoBehaviour {
 		pipes.Add(pipe.transform);
 	}
 
+	//method to move the pipes in the opposite direction of the user
 	void ShiftPipes() {
 		for (int i = pipes.Count - 1; i >= 0; i--) {
 			pipes[i].position -= Vector3.right * shiftSpeed * Time.deltaTime;

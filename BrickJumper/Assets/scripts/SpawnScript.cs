@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnScript : MonoBehaviour {
 
+	//initializing variables
 	class PoolObject {
 		public Transform transform;
 		public bool inUse;
@@ -69,6 +70,7 @@ public class SpawnScript : MonoBehaviour {
 		}
 	}
 
+	//configures the aspect ratio on device
 	void Configure() {
 		targetAspect = targetAspectRatio.x / targetAspectRatio.y;
 		poolObjects = new PoolObject[poolSize];
@@ -85,6 +87,7 @@ public class SpawnScript : MonoBehaviour {
 		}
 	}
 
+	//method to create background object like clouds and their position
 	void Spawn() {
 		Transform t = GetPoolObject();
 		if (t == null) return;
@@ -94,6 +97,7 @@ public class SpawnScript : MonoBehaviour {
 		t.position = pos;
 	}
 
+	//creates a moving effect where the background object like clouds are duplicated and as the user moves past the original object the duplicated is placed beside it
 	void SpawnImmediate() {
 		Transform t = GetPoolObject();
 		if (t==null) return;
@@ -104,6 +108,7 @@ public class SpawnScript : MonoBehaviour {
 		Spawn();
 	}
 
+	//helps move the objects
 	void Shift() {
 		for (int i = 0; i < poolObjects.Length; i++) {
 			poolObjects[i].transform.position += Vector3.right * shiftSpeed * Time.deltaTime;

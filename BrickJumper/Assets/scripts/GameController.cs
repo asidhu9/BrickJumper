@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
+	//initializing variables
 	public delegate void GameDelegate();
 	public static event GameDelegate OnGameStarted;
 	public static event GameDelegate OnGameOverConfirmed;
@@ -26,6 +27,7 @@ public class GameController : MonoBehaviour {
 
 	public bool GameOver { get { return gameOver; } }
 
+	//a singleton to remove objects when the game is not being played
 	void Awake() {
 		if (Instance != null) {
 			Destroy(gameObject);
@@ -36,6 +38,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	//method to toggle the score, timer, and if the players still active
 	void OnEnable() {
 		TapManager.OnPlayerDied += OnPlayerDied;
         TapManager.OnPlayerScored += OnPlayerScored;
@@ -47,6 +50,7 @@ public class GameController : MonoBehaviour {
         TapManager.OnPlayerScored -= OnPlayerScored;
         TimerText.OnTimerFinished -= OnCountdownFinished;
 	}
+
 
 	void OnCountdownFinished() {
 		SetPageState(PageState.None);
@@ -68,6 +72,7 @@ public class GameController : MonoBehaviour {
 		}
 		SetPageState(PageState.GameOver);
 	}
+
 
 	void SetPageState(PageState state) {
 		switch (state) {
@@ -94,12 +99,14 @@ public class GameController : MonoBehaviour {
 		}
 	}
 	
+	//method to confirm the game is over
 	public void ConfirmGameOver() {
 		SetPageState(PageState.Start);
 		scoreText.text = "0";
 		OnGameOverConfirmed();
 	}
 
+	//method to start game
 	public void StartGame() {
 		SetPageState(PageState.Countdown);
 	}
