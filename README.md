@@ -1,5 +1,5 @@
 # UnityProject
-Called BrinkJumper
+School Project called BrinkJumper
 All Code is under BrinkJumper/Assets/Script
 BrickSpawner
   Script to spawn and move the pipes
